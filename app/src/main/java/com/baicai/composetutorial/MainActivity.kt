@@ -32,8 +32,14 @@ import com.baicai.composetutorial.ui.theme.ComposeTutorialTheme
 import com.baicai.composetutorial.ui.theme.QtMain
 import com.baicai.composetutorial.ui.theme.QtStrong
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
+
+    var selectedTab by mutableStateOf(0)
+
     @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +90,7 @@ private fun showToast(context: Context, msg: String) {
 
 @Composable
 private fun BottomBar(selected: Int) {
-    Row {
+    Row(modifier = Modifier.fillMaxWidth()) {
         TabItem(R.drawable.ic_home, "首页", selected == 0)
         TabItem(R.drawable.ic_vip, "超级会员", selected == 1)
         TabItem(R.drawable.ic_sounds, "声界", selected == 2)
