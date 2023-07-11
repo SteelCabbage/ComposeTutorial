@@ -23,8 +23,14 @@ id 'com.android.application' version '8.0.2'
 
 > https://developer.android.google.cn/jetpack/compose/documentation?hl=zh-cn
 
-1. Compose，用于构建原生 Android 界面的新款工具包，一个声明性界面框架；不同于传统的View体系（命令式更新）
-2. 不依赖Android版本，独立更新，以及预览功能的支持
+1. Compose，用于构建**原生 Android 界面**的新款工具包，一个**声明性**界面框架；不同于传统的View体系（命令式更新）
+2. 不依赖Android版本，**独立更新**，以及**预览功能**的支持
+
+
+
+### Compose 中的开发者工效学设计
+
+> https://developer.android.google.cn/jetpack/compose/ergonomics?hl=zh-cn
 
 
 
@@ -54,7 +60,9 @@ private fun BottomBar(selected: Int) {}
 
 > 可组合函数可以使用 `remember` 将本地状态存储在内存中，并跟踪传递给 `mutableStateOf` 的值的变化。该值更新时，系统会自动重新绘制使用此状态的可组合项（及其子项）。这称为[重组](https://developer.android.google.cn/jetpack/compose/mental-model?hl=zh-cn#recomposition)。
 
+**只能重组**
 
+> https://developer.android.google.cn/jetpack/compose/lifecycle?hl=zh-cn
 
 
 
@@ -198,6 +206,24 @@ implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
 
 
+### 关于fragment
+
+**官方迁移策略**
+
+> 移除 fragment 和 Navigation 组件
+>
+> https://developer.android.google.cn/jetpack/compose/migrate/strategy?hl=zh-cn#removing-fragments
+
+**相关资料**
+
+1. Jetpack Compose 和即将退场的 Fragment
+
+> https://blog.csdn.net/tq1086/article/details/119975661
+
+2. Fragments with Jetpack compose
+
+> https://zhuanlan.zhihu.com/p/523869335?utm_id=0
+
 
 
 ## 常用库
@@ -208,7 +234,25 @@ implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 >
 > https://developer.android.google.cn/jetpack/compose/bom
 
+```kotlin
+dependencies {
+    // Import the Compose BOM
+    implementation platform('androidx.compose:compose-bom:2023.05.01')
 
+    // Override Material Design 3 library version with a pre-release version
+    implementation 'androidx.compose.material3:material3:1.1.0-alpha01'
+
+    // Import other Compose libraries without version numbers
+    // ..
+    implementation 'androidx.compose.foundation:foundation'
+}
+```
+
+
+
+### lifecycle
+
+> https://developer.android.google.cn/jetpack/androidx/releases/lifecycle?hl=zh-cn#declaring_dependencies
 
 
 

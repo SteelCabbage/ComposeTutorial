@@ -5,54 +5,71 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.DrawableRes
+import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.baicai.composetutorial.ui.theme.ComposeTutorialTheme
-import com.baicai.composetutorial.ui.theme.QtMain
-import com.baicai.composetutorial.ui.theme.QtStrong
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import com.baicai.composetutorial.ui.widget.BottomBar
+import com.baicai.composetutorial.ui.widget.HelloWorld
 
 class MainActivity : ComponentActivity() {
 
-    var selectedTab by mutableStateOf(0)
+    private val viewModel: MainViewModel by viewModels()
 
-    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTutorialTheme {
 //                Greeting("World~")
-                HorizontalPager(pageCount = 5) {
-
-                }
-                BottomBar(2)
+                HomePage(viewModel)
+//                HelloWorld("哈哈哈")
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun HomePage(viewModel: MainViewModel) {
+    Column {
+//        HorizontalPager(pageCount = 5) { page ->
+//            when (page) {
+//                0 -> Box { Modifier.fillMaxSize().background(color = Color(0xFFFFFFFF)) }
+//                1 -> Box { Modifier.fillMaxSize().background(color = Color(0xFF00FF00)) }
+//                2 -> Box { Modifier.fillMaxSize().background(color = Color(0xFF0000FF)) }
+//                3 -> Box { Modifier.fillMaxSize().background(color = Color(0xFFFF00FF)) }
+//                4 -> Box { Modifier.fillMaxSize().background(color = Color(0xFFFFFF00)) }
+//            }
+//        }
+        BottomBar(viewModel.selectedTab) {
+            viewModel.selectedTab = it
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomePagePreview() {
+//    HomePage()
 }
 
 @Composable
@@ -86,47 +103,6 @@ fun Greeting(name: String) {
 
 private fun showToast(context: Context, msg: String) {
     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-}
-
-@Composable
-private fun BottomBar(selected: Int) {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        TabItem(R.drawable.ic_home, "首页", selected == 0)
-        TabItem(R.drawable.ic_vip, "超级会员", selected == 1)
-        TabItem(R.drawable.ic_sounds, "声界", selected == 2)
-        TabItem(R.drawable.ic_listen, "我听", selected == 3)
-        TabItem(R.drawable.ic_mine, "个人中心", selected == 4)
-    }
-}
-
-@Composable
-private fun TabItem(@DrawableRes resId: Int, title: String, selected: Boolean = false) {
-    Column {
-//        Icon(
-//            bitmap = ImageBitmap.imageResource(id = resId),
-//            contentDescription = title,
-//            tint = Color.Unspecified
-//        )
-//        Icon(painter = painterResource(id = resId), contentDescription = title)
-        Icon(
-            imageVector = ImageVector.vectorResource(id = resId),
-            contentDescription = title,
-            tint = if (selected) Color.Unspecified else QtStrong
-        )
-        Text(text = title, color = if (selected) QtMain else QtStrong)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TabItemPreview() {
-    TabItem(resId = R.drawable.ic_home, title = "我听")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BottomBarPreview() {
-    BottomBar(selected = 3)
 }
 
 @Preview(showBackground = true)
