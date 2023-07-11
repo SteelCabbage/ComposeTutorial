@@ -1,13 +1,18 @@
 package com.baicai.composetutorial.ui.widget
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,8 +38,11 @@ import com.baicai.composetutorial.ui.theme.QtStrong
 @Composable
 fun BottomBar(selected: Int, action: ((position: Int) -> Unit)? = null) {
     Row(
-        modifier = Modifier.padding(0.dp).fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(16.dp, 10.dp)
+            .fillMaxWidth()
+//            .horizontalScroll(state = rememberScrollState())
     ) {
         TabItem(R.drawable.ic_home, "首页", 0, selected, action)
         TabItem(R.drawable.ic_vip, "超级会员", 1, selected, action)
@@ -54,10 +62,15 @@ fun TabItem(
 ) {
     val selected = selectedTab == position
     Button(
-        onClick = { action?.invoke(selectedTab) },
+        onClick = { action?.invoke(position) },
         contentPadding = PaddingValues(0.dp),
         shape = RectangleShape,
-        colors = ButtonDefaults.buttonColors(Color.Transparent, Color.Transparent, Color.Transparent, Color.Transparent)
+        colors = ButtonDefaults.buttonColors(
+            Color.Transparent,
+            Color.Transparent,
+            Color.Transparent,
+            Color.Transparent
+        )
     ) {
         //        Icon(
 //            bitmap = ImageBitmap.imageResource(id = resId),
@@ -67,13 +80,18 @@ fun TabItem(
 //        Icon(painter = painterResource(id = resId), contentDescription = title)
         Column {
             Icon(
-                modifier = Modifier.wrapContentSize().align(alignment = Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(alignment = Alignment.CenterHorizontally),
                 imageVector = ImageVector.vectorResource(id = resId),
                 contentDescription = title,
                 tint = if (selected) Color.Unspecified else QtStrong
             )
+            Spacer(modifier = Modifier.height(5.dp))
             Text(
-                modifier = Modifier.wrapContentSize().align(alignment = Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(alignment = Alignment.CenterHorizontally),
                 text = title,
                 color = if (selected) QtMain else QtStrong
             )
