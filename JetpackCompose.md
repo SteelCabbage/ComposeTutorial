@@ -126,10 +126,6 @@ Icon(bitmap = ImageBitmap.imageResource(id = R.drawable.ic_wechat), contentDescr
 
 
 
-### ProgressIndicator
-
-
-
 ### `Column()`, `Row()`: LinearLayout
 
 1. Arrangement
