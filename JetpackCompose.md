@@ -60,9 +60,23 @@ private fun BottomBar(selected: Int) {}
 
 > 可组合函数可以使用 `remember` 将本地状态存储在内存中，并跟踪传递给 `mutableStateOf` 的值的变化。该值更新时，系统会自动重新绘制使用此状态的可组合项（及其子项）。这称为[重组](https://developer.android.google.cn/jetpack/compose/mental-model?hl=zh-cn#recomposition)。
 
+
+
 **智能重组**
 
 > https://developer.android.google.cn/jetpack/compose/lifecycle?hl=zh-cn
+
+
+
+**提升状态的场景（重要）**
+
+> https://developer.android.google.cn/jetpack/compose/state-hoisting?hl=zh-cn
+
+
+
+**遵循最佳实践（重要）**
+
+> https://developer.android.google.cn/jetpack/compose/performance/bestpractices?hl=zh-cn
 
 
 
