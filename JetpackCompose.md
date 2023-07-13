@@ -108,6 +108,16 @@ private fun BottomBar(selected: Int) {}
 
 ### Text()
 
+1. **Compose 布局中的固有特性测量**
+
+> https://developer.android.google.cn/jetpack/compose/layouts/intrinsic-measurements?hl=zh-cn
+
+
+
+2. **weight的使用**
+
+> 当Text内容过长时，会将同排的控件挤出屏幕外，这时可以将Text的weight设置为1，这样父项将未加权的子项测量完后，将剩余空间用来权重分配
+
 
 
 ### Image()
