@@ -6,6 +6,6 @@ package com.baicai.composetutorial.bean
  */
 interface CommonData {
 
-    fun type(): Int
-    fun title(): String
+    fun type(): DataType
+    fun title(): String?
 }

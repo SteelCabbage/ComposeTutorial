@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.baicai.composetutorial.MainViewModel
+import com.baicai.composetutorial.bean.DataType
+import com.baicai.composetutorial.ui.item.FeedsTypeChannel
+import com.baicai.composetutorial.ui.item.FeedsTypeRadio
 import com.baicai.composetutorial.utils.toastText
 
 /**
@@ -57,7 +60,15 @@ fun PageSounds() {
         Spacer(modifier = Modifier.height(20.dp))
         LazyColumn {
             items(viewModel.dataList) { commonData ->
-                Text(text = commonData.title())
+                when (commonData.type()) {
+                    DataType.RADIO -> {
+                        FeedsTypeRadio(commonData)
+                    }
+
+                    DataType.CHANNEL -> {
+                        FeedsTypeChannel(commonData)
+                    }
+                }
             }
         }
     }
