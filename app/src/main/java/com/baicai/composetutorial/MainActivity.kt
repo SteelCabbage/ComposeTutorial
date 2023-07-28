@@ -14,6 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.baicai.composetutorial.page.PageHome
 import com.baicai.composetutorial.page.PageListen
@@ -35,6 +36,7 @@ class MainActivity : ComponentActivity() {
             ComposeTutorialTheme {
                 HomePage(viewModel)
             }
+            lifecycleScope
         }
     }
 }
@@ -73,7 +75,8 @@ fun HomePage(viewModel: MainViewModel) {
         BottomBar(viewModel.selectedTab) {
             viewModel.selectedTab = it
             coroutineScope.launch {
-                pagerState.animateScrollToPage(it)
+//                pagerState.animateScrollToPage(it)
+                pagerState.scrollToPage(it)
             }
         }
     }

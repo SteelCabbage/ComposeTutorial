@@ -56,27 +56,61 @@ private fun BottomBar(selected: Int) {}
 
 
 
+### 关键术语
+
+> https://developer.android.google.cn/jetpack/compose/state?hl=zh-cn
+>
+> **组合**：对 Jetpack Compose 在执行可组合项时所构建界面的描述。
+>
+> **初始组合**：通过首次运行可组合项创建组合。
+>
+> **重组**：在数据发生变化时重新运行可组合项以更新组合。
+
+
+
 ### 重组
 
-> 可组合函数可以使用 `remember` 将本地状态存储在内存中，并跟踪传递给 `mutableStateOf` 的值的变化。该值更新时，系统会自动重新绘制使用此状态的可组合项（及其子项）。这称为[重组](https://developer.android.google.cn/jetpack/compose/mental-model?hl=zh-cn#recomposition)。
+> 重组是指在输入更改时再次调用可组合函数的过程
+>
+> https://developer.android.google.cn/jetpack/compose/mental-model?hl=zh-cn
 
 
 
-**智能重组**
+**重组作用域**
+
+> https://compose.funnysaltyfish.fun/docs/principle/recompositionScope
+
+
+
+**生命周期**
 
 > https://developer.android.google.cn/jetpack/compose/lifecycle?hl=zh-cn
 
 
 
-**提升状态的场景（重要）**
+### 单向数据流
+
+> https://developer.android.google.cn/jetpack/compose/architecture?hl=zh-cn
+>
+> `mutableStateOf(value)` 会创建一个 `MutableState`，后者是 Compose 中的可观察类型。如果其值有任何更改，系统会安排重组读取此值的所有可组合函数。
+>
+> `remember` 会将对象存储在组合中，当调用 `remember` 的可组合项从组合中移除后，它会忘记该对象。
+>
+> `rememberSaveable` 通过将状态保存在 `Bundle` 中来保留状态，使其在配置更改后仍保持不变。
+
+
+
+### 提升状态的场景（重要）
 
 > https://developer.android.google.cn/jetpack/compose/state-hoisting?hl=zh-cn
 
 
 
-**遵循最佳实践（重要）**
+### 遵循最佳实践（重要）
 
 > https://developer.android.google.cn/jetpack/compose/performance/bestpractices?hl=zh-cn
+
+
 
 
 
