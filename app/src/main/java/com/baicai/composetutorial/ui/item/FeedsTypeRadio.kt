@@ -1,5 +1,6 @@
 package com.baicai.composetutorial.ui.item
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.baicai.composetutorial.TAG
 import com.baicai.composetutorial.bean.CommonData
 import com.baicai.composetutorial.bean.Radio
 import com.baicai.composetutorial.ui.theme.QtStronger
@@ -38,6 +40,7 @@ import com.baicai.composetutorial.ui.theme.QtStronger
 
 @Composable
 fun FeedsTypeRadio(commonData: CommonData) {
+    Log.d(TAG, "FeedsTypeRadio title=${commonData.title()}")
     val radio = commonData as? Radio ?: return
     Row(
         horizontalArrangement = Arrangement.End,

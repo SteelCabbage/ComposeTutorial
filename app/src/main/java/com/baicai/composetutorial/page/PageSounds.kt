@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.baicai.composetutorial.ADD_POSITION_FIRST
 import com.baicai.composetutorial.MainViewModel
 import com.baicai.composetutorial.bean.DataType
 import com.baicai.composetutorial.ui.item.FeedsTypeChannel
@@ -80,7 +81,7 @@ fun PageSounds() {
                 contentDescription = "网络狐狸",
                 modifier = Modifier
                     .clickable {
-                        viewModel.sendMsg(DataType.CHANNEL)
+                        viewModel.sendMsg(DataType.CHANNEL, ADD_POSITION_FIRST)
                     }
                     .size(60.dp)
             )
@@ -96,7 +97,7 @@ fun PageSounds() {
         }
         Spacer(modifier = Modifier.height(20.dp))
         LazyColumn {
-            items(viewModel.dataList) { commonData ->
+            items(viewModel.dataList, key = { it.title() }) { commonData ->
                 when (commonData.type()) {
                     DataType.RADIO -> {
                         FeedsTypeRadio(commonData)

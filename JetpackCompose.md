@@ -76,15 +76,42 @@ private fun BottomBar(selected: Int) {}
 
 
 
-**重组作用域**
+#### 重组作用域
 
 > https://compose.funnysaltyfish.fun/docs/principle/recompositionScope
 
 
 
-**生命周期**
+#### 生命周期
 
 > https://developer.android.google.cn/jetpack/compose/lifecycle?hl=zh-cn
+
+**如果所有输入都稳定并且没有更改，Compose 将跳过重组可组合项。比较使用了 `equals` 方法。**
+
+1. ***稳定类型***
+
+稳定类型必须符合以下协定：
+
+- 对于相同的两个实例，其 `equals` 的结果将始终相同。
+
+- 如果类型的某个公共属性发生变化，组合将收到通知。
+- 所有公共属性类型也都是稳定。
+
+> 有这样一些归入此协定的重要通用类型，即使未使用 `@Stable` 注解来显式标记为稳定的类型，Compose 编译器也会将其视为稳定的类型。
+>
+> - 所有基元值类型：`Boolean`、`Int`、`Long`、`Float`、`Char` 等。
+> - 字符串
+> - 所有函数类型 (lambda)
+
+**Compose 的 `MutableState` 类型是一种众所周知稳定但可变的类型。如果 `MutableState` 中存储了值，状态对象整体会被视为稳定对象，因为 `State` 的 `.value` 属性如有任何更改，Compose 就会收到通知**
+
+
+
+2. **`@Stable`**
+
+Compose 仅在可以证明稳定的情况下才会认为类型是稳定的。例如，接口通常被视为不稳定类型，并且具有可变公共属性的类型（实现可能不可变）的类型也被视为不稳定类型。
+
+如果 Compose 无法推断类型是否稳定，但您想强制 Compose 将其视为稳定类型，请使用 [`@Stable`](https://developer.android.google.cn/reference/kotlin/androidx/compose/runtime/Stable?hl=zh-cn) 注解对其进行标记。
 
 
 
@@ -133,12 +160,6 @@ private fun BottomBar(selected: Int) {}
 
 
 ## 常用UI
-
-### Which Compose API to use
-
-> https://www.jetpackcompose.app/What-is-the-equivalent-of-EditText-in-Jetpack-Compose
-
-
 
 ### Text()
 
@@ -221,6 +242,22 @@ implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
 
 ### `LazyColumn()`, `LazyRow()`: RcecyclerView
+
+#### 项键
+
+多次调用同一可组合项也会多次将其添加到组合中。如果从同一个调用点多次调用某个可组合项，Compose 就无
+
+法唯一标识对该可组合项的每次调用，因此除了**调用点**之外，还会使用**执行顺序**来**区分实例**。这种行为有时是必需
+
+的，但在某些情况下会导致发生意外行为：
+
+> list.add(e): 看似正常
+>
+> list.add(0, e)：顺序改变，全部重组
+
+为每一个项提供一个稳定的键可确保 Compose **避免不必要的重组**
+
+> https://developer.android.google.cn/jetpack/compose/lists?hl=zh-cn#item-keys
 
 
 

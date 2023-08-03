@@ -1,5 +1,6 @@
 package com.baicai.composetutorial.ui.item
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.baicai.composetutorial.TAG
 import com.baicai.composetutorial.bean.Channel
 import com.baicai.composetutorial.bean.CommonData
 import com.baicai.composetutorial.ui.theme.QtStronger
@@ -32,6 +34,7 @@ import com.baicai.composetutorial.ui.theme.QtStronger
 
 @Composable
 fun FeedsTypeChannel(commonData: CommonData) {
+    Log.d(TAG, "FeedsTypeChannel title=${commonData.title()}")
     val channel = commonData as? Channel ?: return
     Row(
         horizontalArrangement = Arrangement.Start,

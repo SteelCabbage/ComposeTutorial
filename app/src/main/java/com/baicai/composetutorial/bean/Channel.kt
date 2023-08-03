@@ -13,7 +13,7 @@ data class Channel(
         return DataType.CHANNEL
     }
 
-    override fun title(): String? {
-        return title
+    override fun title(): String {
+        return title ?: ""
     }
 }

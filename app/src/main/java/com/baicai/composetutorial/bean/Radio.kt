@@ -13,7 +13,7 @@ data class Radio(
         return DataType.RADIO
     }
 
-    override fun title(): String? {
-        return title
+    override fun title(): String {
+        return title ?: ""
     }
 }
