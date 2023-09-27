@@ -46,16 +46,21 @@ fun PageListen() {
     val pageName = "我听"
     val context = LocalContext.current
     Column(
-        verticalArrangement = Arrangement.Top, modifier = Modifier.fillMaxSize().background(color = Color(0xFF48CFAD))
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color(0xFF48CFAD))
     ) {
         Text(text = pageName,
             fontSize = 40.sp,
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth().clickable {
-                toastText(context, pageName)
-            })
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    toastText(context, pageName)
+                })
 
         var textInput by remember { mutableStateOf("") }
         TextField(
@@ -100,7 +105,10 @@ fun TestRemember0() {
 
     Text(slogan0)
 
-    // TODO: 临时使用协程, 在compose中的正确用法后续补充
+    /*
+    1. key值可以填多个, 当key的值改变时, 协程这段重新执行
+    2. 可以填true, false, Unit(官方), 都表示这段仅执行一次
+     */
     LaunchedEffect(Unit) {
         delay(3000)
         slogan0 = "slogan0 Hello Rabbit~!"
@@ -134,7 +142,6 @@ fun TestRemember2() {
         Text(slogan2)
     }
 
-    // TODO: 临时使用协程, 在compose中的正确用法后续补充
     LaunchedEffect(Unit) {
         delay(3000)
         slogan2 = "slogan2 Hello Rabbit~!"
@@ -149,7 +156,6 @@ fun TestRemember3() {
 
     Text(slogan3)
 
-    // TODO: 临时使用协程, 在compose中的正确用法后续补充
     LaunchedEffect(Unit) {
         delay(3000)
         slogan3 = "slogan3 Hello Rabbit~!"

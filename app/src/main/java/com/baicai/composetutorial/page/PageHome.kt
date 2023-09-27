@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -33,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.baicai.composetutorial.MainViewModel
 import com.baicai.composetutorial.TAG
@@ -48,17 +51,56 @@ fun PageHome() {
     val pageName = "首页"
     val context = LocalContext.current
     val viewModel: MainViewModel = viewModel()
+    val dialogVisible = remember { mutableStateOf(false) }
     Column(
-        Modifier.fillMaxSize().background(color = Color(0xFFFC6E51))
+        Modifier
+            .fillMaxSize()
+            .background(color = Color(0xFFFC6E51))
     ) {
         // 测试Text()
         TestText(pageName, context)
+
+        // 点击添加dialog
+        TestAddDialog(dialogVisible)
 
         // 测试稳定性相关
         TestStable(viewModel)
 
         // 测试项键
         TestListKey()
+
+        // add Dialog
+        AddDialog(dialogVisible)
+    }
+}
+
+@Composable
+fun TestAddDialog(dialogVisible: MutableState<Boolean>) {
+    Button(onClick = {
+        dialogVisible.value = true
+    }) {
+        Text(text = "点击弹dialog")
+    }
+}
+
+@Composable
+fun AddDialog(dialogVisible: MutableState<Boolean>) {
+    val context = LocalContext.current
+    if (dialogVisible.value) {
+        Dialog(onDismissRequest = {
+            dialogVisible.value = false
+            toastText(context, "弹窗关闭了")
+        }, content = {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .width(280.dp)
+                    .height(100.dp)
+                    .background(color = Color.White, shape = RoundedCornerShape(10.dp))
+            ) {
+                Text("弹窗测试")
+            }
+        })
     }
 }
 
@@ -66,7 +108,9 @@ fun PageHome() {
 fun TestStable(viewModel: MainViewModel) {
     Log.w(TAG, "Recompose 范围测试1")
     Column(
-        Modifier.fillMaxWidth().height(100.dp),
+        Modifier
+            .fillMaxWidth()
+            .height(100.dp),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
