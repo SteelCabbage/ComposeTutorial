@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,7 +19,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,13 +31,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.baicai.composetutorial.TAG
 import com.baicai.composetutorial.ui.theme.QtStronger
 import com.baicai.composetutorial.ui.theme.QtWeak
 import com.baicai.composetutorial.utils.toastText
 import kotlinx.coroutines.delay
+import java.util.Locale
 
 /**
  * @author liuyi@qingting.fm
@@ -68,7 +75,7 @@ fun PageListen() {
             shape = RoundedCornerShape(30.dp),
             value = textInput,
             onValueChange = { str ->
-                Log.i("baicai", "TextField onValueChange=$str")
+                Log.i(TAG, "TextField onValueChange=$str")
                 textInput = str
             },
             placeholder = { Text(text = "请输入你想听的吧～", color = QtWeak) },
@@ -93,6 +100,12 @@ fun PageListen() {
 
         Spacer(Modifier.height(20.dp))
         TestRemember3()
+
+        Spacer(Modifier.height(20.dp))
+        TestDerivedStateOf0()
+
+        Spacer(Modifier.height(20.dp))
+        TestDerivedStateOf1()
     }
 }
 
@@ -126,7 +139,7 @@ fun TestRemember1(content: String) {
 }
 
 fun complexCompute(content: String): Int {
-    Log.w("baicai", "complexCompute ------> content=$content")
+    Log.w(TAG, "complexCompute ------> content=$content")
     return content.length
 }
 
@@ -135,7 +148,7 @@ fun TestRemember2() {
     // 错误使用, slogan2的变化造成重组, 但本身不在重组作用域内(包了一层button), 所以看似正常
     var slogan2 by mutableStateOf("slogan2: Hi~!")
 
-    Log.e("baicai", "TestRemember2 重组")
+    Log.e(TAG, "TestRemember2 重组")
     // 这边Button如果换成Row, 因为Row是个inline函数, 会造成TestRemember2本身重组;
     // 因为内联函数编译期会在调用处展开, 无法在下次重组时找到合适入口, 只能共享调用方的重组范围
     Button(onClick = {}) {
@@ -159,6 +172,43 @@ fun TestRemember3() {
     LaunchedEffect(Unit) {
         delay(3000)
         slogan3 = "slogan3 Hello Rabbit~!"
+    }
+}
+
+@Composable
+fun TestDerivedStateOf0() {
+    var data by remember { mutableStateOf("a") }
+//    val data2 = remember {
+//        data.uppercase()
+//    }
+    val data2 = remember(data) { data.uppercase() }
+    Button(onClick = {
+        data = "dabaicai"
+    }) {
+        Text(text = data2)
+    }
+}
+
+@Composable
+fun TestDerivedStateOf1() {
+    val data = remember { mutableStateListOf("a", "b", "c") }
+//    val data2Upper = remember(data) {
+//        data.map { it.uppercase() }
+//    }
+    val data2Upper by remember {
+        derivedStateOf { data.map { it.uppercase() } }
+    }
+    Column {
+        Button(onClick = {
+            data.add("dabaicai")
+        }) {
+            Text(text = "点击添加元素")
+        }
+        LazyColumn {
+            items(data2Upper) {
+                Text(text = it)
+            }
+        }
     }
 }
 

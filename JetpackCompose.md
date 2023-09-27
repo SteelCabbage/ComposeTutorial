@@ -159,6 +159,30 @@ Compose 仅在可以证明稳定的情况下才会认为类型是稳定的。例
 
 
 
+## 状态订阅和自动更新
+
+### MutableState
+
+mutableStateOf 返回 MutableState<T>
+
+
+
+### remember
+
+1. 可以带key缓存
+2. 应对Recompose导致的**变量重复初始化**的问题
+3. Composable函数之外没必要使用remember，也不能使用（是个Composable函数）
+
+
+
+### derivedStateOf
+
+> https://developer.android.google.cn/jetpack/compose/side-effects?hl=zh-cn#derivedstateof
+
+
+
+
+
 ## 协程
 
 ### LaunchedEffect()

@@ -45,12 +45,18 @@ fun FeedsTypeRadio(commonData: CommonData) {
     Row(
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(16.dp, 10.dp).fillMaxWidth().height(IntrinsicSize.Max)
+        modifier = Modifier
+            .padding(16.dp, 10.dp)
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max)
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxHeight().background(Color(0xFFF08080)).weight(1F)
+            modifier = Modifier
+                .fillMaxHeight()
+                .background(Color(0xFFF08080))
+                .weight(1F)
         ) {
             Text(
                 text = radio.title ?: "",
@@ -60,12 +66,16 @@ fun FeedsTypeRadio(commonData: CommonData) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 color = QtStronger,
-                modifier = Modifier.wrapContentWidth().background(Color(0xFFFFDAB9))
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .background(Color(0xFFFFDAB9))
             )
         }
         Spacer(modifier = Modifier.width(20.dp))
         AsyncImage(
-            modifier = Modifier.size(60.dp).clip(CircleShape),
+            modifier = Modifier
+                .size(60.dp)
+                .clip(CircleShape),
             model = radio.url,
             contentDescription = radio.title
         )
