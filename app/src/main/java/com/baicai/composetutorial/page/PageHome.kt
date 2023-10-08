@@ -115,11 +115,12 @@ fun TestStable(viewModel: MainViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Log.w(TAG, "Recompose 范围测试2")
-        var age by remember { mutableStateOf("10") }
+        var age by remember { mutableStateOf("点击测试稳定性") }
 
         Text(age, Modifier.clickable {
-            age = "100"
-            viewModel.user = User("Hi~")
+            age = "点击测试稳定性，被点击了"
+//            viewModel.user.name = "大白菜～！"
+//            viewModel.user = User("Hi~")
         })
 
         Complex(viewModel.user)
@@ -132,8 +133,8 @@ fun Complex(user: User) {
     Text(user.name)
 }
 
-@Stable
-data class User(var name: String) {
+//@Stable
+class User(var name: String) {
 
 }
 

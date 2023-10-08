@@ -84,7 +84,15 @@ private fun BottomBar(selected: Int) {}
 
 #### 生命周期
 
+> 官方：
+>
 > https://developer.android.google.cn/jetpack/compose/lifecycle?hl=zh-cn
+>
+> 
+>
+> 其它博客：
+>
+> https://zhuanlan.zhihu.com/p/620252416
 
 **如果所有输入都稳定并且没有更改，Compose 将跳过重组可组合项。比较使用了 `equals` 方法。**
 
@@ -108,6 +116,17 @@ private fun BottomBar(selected: Int) {}
 
 
 2. **`@Stable`**
+
+>  期望：对象变化的时候，还是会重组的，
+> 但如果对象没变，是被其它重组带着，被迫重组的时候，那就可以跳过
+
+- 是声明一个类/接口，是否稳定的注解
+
+- 如果不稳定，那就会重组
+  如果加了注解，表示稳定，那就可以跳过重组，那这样，就优化了一部分性能
+- **注意：**对象的，变/不变，有一些要求，如果无脑上@stable，就会造成bug，比如对象更新了，但是该触发的重组没有触发
+
+
 
 Compose 仅在可以证明稳定的情况下才会认为类型是稳定的。例如，接口通常被视为不稳定类型，并且具有可变公共属性的类型（实现可能不可变）的类型也被视为不稳定类型。
 
@@ -178,6 +197,10 @@ mutableStateOf 返回 MutableState<T>
 ### derivedStateOf
 
 > https://developer.android.google.cn/jetpack/compose/side-effects?hl=zh-cn#derivedstateof
+
+如果某个状态是从其他状态对象计算或派生得出的，请使用 `derivedStateOf`。此函数可确保仅当计算中使用的状态之一发生变化时才会进行计算。
+
+
 
 
 
@@ -358,6 +381,83 @@ implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 2. Fragments with Jetpack compose
 
 > https://zhuanlan.zhihu.com/p/523869335?utm_id=0
+
+
+
+
+
+## 动画
+
+### animateXXXAsState状态转移型
+
+```kotlin
+val anim1 by animateDpAsState(targetValue = size, label = "anim1")
+```
+
+
+
+### Animatable流程定制型
+
+```kotlin
+val anim2 = remember { Animatable(size, Dp.VectorConverter) }
+```
+
+
+
+### 配置
+
+**AnimationSpec**
+
+```kotlin
+anim3.animateTo(
+            size,
+            tween(
+                durationMillis = 3000,
+                delayMillis = 1000,
+                easing = LinearEasing
+            )
+        )
+```
+
+
+
+**Easing**
+
+> https://cubic-bezier.com/
+
+- FastOutSlowInEasing：先加速再减速
+- LinearOutSlowInEasing：全程减速
+- FastOutLinearInEasing：全程加速
+- LinearEasing：匀速
+
+
+
+**其它spec**
+
+- KeyframesSpec：多段的AnimationSpec
+- RepeatableSpec：只能设置有限个数
+- SpringSpec：基于弹簧的物理模型
+- InfiniteRepeatableSpec：无限次
+
+
+
+### animateDecay()消散型
+
+
+
+### block监听每一帧
+
+
+
+### 打断
+
+
+
+### Transition多属性的状态切换
+
+
+
+
 
 
 
