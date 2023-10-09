@@ -31,7 +31,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,7 +39,6 @@ import com.baicai.composetutorial.ui.theme.QtStronger
 import com.baicai.composetutorial.ui.theme.QtWeak
 import com.baicai.composetutorial.utils.toastText
 import kotlinx.coroutines.delay
-import java.util.Locale
 
 /**
  * @author liuyi@qingting.fm
