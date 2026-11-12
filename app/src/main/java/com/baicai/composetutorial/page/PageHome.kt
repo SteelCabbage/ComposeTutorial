@@ -19,7 +19,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -187,7 +187,17 @@ fun TestText(pageName: String, context: Context) {
 }
 
 @Preview(showBackground = true)
+@Preview(group = "Font Scale", name = "80%", fontScale = 0.8f)
+@Preview(group = "Font Scale", name = "100%", fontScale = 1f)
+@Preview(group = "Font Scale", name = "150%", fontScale = 1.5f)
+@Preview(group = "Font Scale", name = "200%", fontScale = 2f)
+@DevicesPreview
 @Composable
 fun PageHomePreview() {
     PageHome()
 }
+
+@Preview(group = "Devices", name = "Default")
+@Preview(group = "Devices", name = "Tablet", device = Devices.TABLET)
+@Preview(group = "Devices", name = "Desktop", device = Devices.DESKTOP)
+annotation class DevicesPreview

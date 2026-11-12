@@ -178,6 +178,33 @@ Compose 仅在可以证明稳定的情况下才会认为类型是稳定的。例
 
 
 
+### 使用方式
+
+1. 同一个XXPreview函数，可以声明多个@Preview，每个@Preview都会有对应的预览，通过group参数分组，name参数重新命名
+
+``` kotlin
+@Preview(group = "Font Scale", name = "80%", fontScale = 0.8f)
+@Preview(group = "Font Scale", name = "100%", fontScale = 1f)
+@Preview(group = "Font Scale", name = "150%", fontScale = 1.5f)
+@Preview(group = "Font Scale", name = "200%", fontScale = 2f)
+@DevicesPreview
+@Composable
+private fun XXPreview(){}
+```
+
+2. 某个注解，也可以声明多个@Preview，然后在某个函数上直接引用这组预览注解
+
+```kotlin
+@Preview(group = "Devices", name = "Default")
+@Preview(group = "Devices", name = "Tablet", device = Devices.TABLET)
+@Preview(group = "Devices", name = "Desktop", device = Devices.DESKTOP)
+annotation class DevicesPreview
+```
+
+
+
+
+
 ## 状态订阅和自动更新
 
 ### MutableState
